@@ -1,0 +1,60 @@
+{
+  "name": "@yassirh/opencode-codex-limits-plugin",
+  "version": "0.1.0",
+  "description": "Codex subscription quota bars and reset countdowns for the OpenCode V2 sidebar",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "codex",
+    "openai",
+    "quota",
+    "tui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yassirh/opencode-codex-limits-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yassirh/opencode-codex-limits-plugin/issues"
+  },
+  "homepage": "https://github.com/yassirh/opencode-codex-limits-plugin#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./tui": "./dist/tui.js",
+    "./rpc": "./dist/rpc.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/compile-tui.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "@opencode/plugin": "^2.0.12"
+  },
+  "peerDependencies": {
+    "@opentui/core": ">=0.5.10",
+    "@opentui/solid": ">=0.5.10",
+    "solid-js": ">=1.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.28.0",
+    "@opentui/core": "0.5.10",
+    "@opentui/solid": "0.5.10",
+    "@types/node": "^24.12.2",
+    "babel-plugin-module-resolver": "5.0.2",
+    "babel-preset-solid": "1.9.12",
+    "solid-js": "^1.9.0",
+    "typescript": "5.8.2"
+  }
+}

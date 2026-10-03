@@ -1,6 +1,6 @@
 {
   "name": "@yassirh/opencode-codex-limits-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Codex subscription quota bars and reset countdowns for the OpenCode V2 sidebar",
   "license": "MIT",
   "type": "module",

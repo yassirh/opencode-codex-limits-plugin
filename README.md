@@ -80,7 +80,22 @@ The package exports a server plugin and a `./tui` plugin; OpenCode loads the TUI
 
 The usage request is made by the OpenCode server to `https://chatgpt.com/backend-api/wham/usage`. This is an unpublished ChatGPT backend endpoint, so its response format may change. Only usage percentages, reset counts and titles, reset/expiry timestamps, and status information are sent to the TUI. Missing windows are omitted: some accounts expose a weekly limit but no 5-hour limit. An unsuccessful refresh preserves the last successful snapshot and labels it stale.
 
-## Publish a release
+## GitHub builds
+
+The build workflow runs on pushes to `main`, pull requests, and manual runs from the GitHub Actions tab. It installs dependencies, builds and tests the plugin, and uploads `dist/` as a downloadable artifact.
+
+## GitHub releases
+
+Push a version tag matching `v*` to create a GitHub Release. Update `package.json` and `package-lock.json` to the release version and commit the changes before tagging:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The release workflow installs dependencies, builds and tests the plugin, and attaches the npm package (`.tgz`) to a GitHub Release with generated release notes.
+
+## Publish to npm
 
 ```sh
 npm login --registry=https://registry.npmjs.org/

@@ -1,4 +1,5 @@
 export interface LimitsConfig {
+  showPercent: boolean
   levels: { healthy: number; warning: number }
   colors: { healthy: string; warning: string; critical: string }
 }
@@ -24,6 +25,7 @@ export function parseConfig(options: unknown): LimitsConfig {
     && warning >= 0 && warning < healthy && healthy <= 100
 
   return {
+    showPercent: input.showPercent === true,
     levels: validLevels ? { healthy, warning } : { healthy: 30, warning: 20 },
     colors: {
       healthy: color(colors.healthy, "#22c55e"),

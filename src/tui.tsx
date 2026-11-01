@@ -3,7 +3,7 @@ import { For, Show } from "solid-js"
 import { parseConfig, progressColor } from "./config.js"
 import { Limits, type LimitsResult } from "./rpc.js"
 import { formatExpiry } from "./resets.js"
-import { formatReset, progressBar, type UsageWindow } from "./usage.js"
+import { formatReset, progressBar, progressLabel, type UsageWindow } from "./usage.js"
 
 interface LimitsState extends Omit<LimitsResult, "status"> {
   status: LimitsResult["status"] | "loading"
@@ -70,15 +70,22 @@ export default Plugin.define({
 
     function WindowLine(props: { label: string; value?: UsageWindow }) {
       const bar = () => progressBar(props.value?.remainingPercent ?? 0, 15)
+      const label = () => progressLabel(props.value?.remainingPercent ?? 0, 15)
       const barColor = () => progressColor(props.value?.remainingPercent ?? 0, limits.config ?? config)
       return (
         <box flexDirection="row" width="100%" justifyContent="space-between" visible={props.value !== undefined}>
           <text fg={ctx.theme.text.base} flexShrink={0}>{props.label}</text>
           <box flexDirection="row" flexGrow={1} flexShrink={1} minWidth={0} justifyContent="flex-end">
             <text fg={ctx.theme.text.base}>{formatReset(props.value?.resetsAt, limits.now, true)} </text>
-            <box flexDirection="row" width={15} flexShrink={0}>
+            <box flexDirection="row" width={15} height={1} flexShrink={0}>
               <text fg={barColor()} width={bar().filled.length} flexShrink={0}>{bar().filled}</text>
               <text fg={ctx.theme.text.muted} width={bar().empty.length} flexShrink={0}>{bar().empty}</text>
+              <Show when={limits.config?.showPercent ?? config.showPercent}>
+                <box position="absolute" top={0} left={label().left} flexDirection="row" height={1}>
+                  <text fg="#ffffff" bg={barColor()} width={label().filled.length} flexShrink={0}>{label().filled}</text>
+                  <text fg="#ffffff" width={label().empty.length} flexShrink={0}>{label().empty}</text>
+                </box>
+              </Show>
             </box>
           </box>
         </box>

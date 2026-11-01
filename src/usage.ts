@@ -78,3 +78,11 @@ export function progressBar(remainingPercent: number, width = 20): { filled: str
   const filled = Math.round((percent / 100) * safeWidth)
   return { filled: "█".repeat(filled), empty: "░".repeat(safeWidth - filled) }
 }
+
+export function progressLabel(remainingPercent: number, width = 20): { left: number; filled: string; empty: string } {
+  const bar = progressBar(remainingPercent, width)
+  const text = `${Math.round(Math.max(0, Math.min(100, remainingPercent)))}%`
+  const left = Math.max(0, Math.floor((bar.filled.length + bar.empty.length - text.length) / 2))
+  const filledLength = Math.max(0, bar.filled.length - left)
+  return { left, filled: text.slice(0, filledLength), empty: text.slice(filledLength) }
+}

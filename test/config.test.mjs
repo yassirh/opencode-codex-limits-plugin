@@ -2,6 +2,14 @@ import assert from "node:assert/strict"
 import test from "node:test"
 import { parseConfig, progressColor } from "../dist/config.js"
 
+test("percentage labels are opt-in and require a boolean true", () => {
+  assert.equal(parseConfig(undefined).showPercent, false)
+  assert.equal(parseConfig({ showPercent: true }).showPercent, true)
+  for (const showPercent of [false, "true", 1, null, {}, []]) {
+    assert.equal(parseConfig({ showPercent }).showPercent, false)
+  }
+})
+
 test("default health colors respect strict threshold boundaries", () => {
   const config = parseConfig(undefined)
   assert.equal(progressColor(30.1, config), "#22c55e")

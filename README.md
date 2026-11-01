@@ -60,6 +60,26 @@ Health is based on **remaining capacity**:
 
 Every setting is optional. Missing colors use their defaults; colors must be `#RRGGBB` hex strings, and invalid colors fall back individually. Missing thresholds use their defaults. The resulting thresholds must satisfy `0 ≤ warning < healthy ≤ 100`; an invalid combination falls back to both default thresholds. Only the filled portion of the bar changes color; the empty portion stays muted. Restart OpenCode after changing these options.
 
+## Percentage labels
+
+Set `options.showPercent` to `true` to show the remaining percentage rounded to a whole number (for example, `66%`) in white at the center of both quota bars:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    {
+      "package": "@yassirh/opencode-codex-limits-plugin",
+      "options": {
+        "showPercent": true
+      }
+    }
+  ]
+}
+```
+
+The default is `false`, preserving the original appearance. This option can be combined with `levels` and `colors`; bar widths, health colors, and reset countdowns are unchanged. The filled part keeps its health-color background behind the white label. Settings are passed from the server to the TUI, including automatically loaded TUI entrypoints.
+
 ## Local development
 
 ```sh

@@ -14,6 +14,8 @@ test("TUI build uses reactive Solid JSX and OpenCode memory storage", async () =
   assert.match(code, /ctx\.storage\.memory\("limits"/)
   assert.match(code, /get value\(\)\s*\{\s*return limits\.fiveHour;/)
   assert.match(code, /get value\(\)\s*\{\s*return limits\.weekly;/)
+  assert.match(code, /return limits\.config\?\.showPercent \?\? config\.showPercent;/)
+  assert.match(code, /"fg", "#ffffff"/)
 })
 
 test("refresh replaces an expired quota window and updates the clock immediately", async () => {
@@ -61,6 +63,7 @@ test("banked reset toggle is reactive and stays collapsed across refreshes", asy
   let dispose
   const observed = []
   const serverConfig = {
+    showPercent: true,
     levels: { healthy: 80, warning: 20 },
     colors: { healthy: "#22c55e", warning: "#f97316", critical: "#ef4444" },
   }

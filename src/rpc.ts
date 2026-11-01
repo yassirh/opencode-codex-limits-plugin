@@ -63,6 +63,7 @@ export const Limits = Rpc.define({
           config: {
             type: "object",
             properties: {
+              showPercent: { type: "boolean" },
               levels: {
                 type: "object",
                 properties: { healthy: { type: "number" }, warning: { type: "number" } },

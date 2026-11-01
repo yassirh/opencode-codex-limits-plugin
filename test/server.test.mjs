@@ -26,7 +26,7 @@ test("server uses the active OAuth account, caches safely and marks failed refre
   }
   try {
     await plugin.setup({
-      options: { levels: { healthy: 80, warning: 20 }, colors: { warning: "#ff9900" } },
+      options: { showPercent: true, levels: { healthy: 80, warning: 20 }, colors: { warning: "#ff9900" } },
       integration: { connection: {
         active: async () => current,
         resolve: async () => credential,
@@ -38,6 +38,7 @@ test("server uses the active OAuth account, caches safely and marks failed refre
     assert.equal(first.fiveHour.remainingPercent, 60)
     assert.equal(first.weekly.remainingPercent, 80)
     assert.deepEqual(first.config, {
+      showPercent: true,
       levels: { healthy: 80, warning: 20 },
       colors: { healthy: "#22c55e", warning: "#ff9900", critical: "#ef4444" },
     })
@@ -108,6 +109,7 @@ test("reset detail failures preserve quota and count, and zero resets skips the 
       })
       const result = await read({}, { signal: new AbortController().signal })
       assert.equal(result.status, "ready")
+      assert.equal(result.config.showPercent, false)
       assert.equal(result.fiveHour.remainingPercent, 90)
       assert.deepEqual(result.bankedResets, {
         availableCount: count, detailsStatus: count === 0 ? "ready" : "unavailable",
